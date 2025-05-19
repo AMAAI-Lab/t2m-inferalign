@@ -2,7 +2,7 @@
 <p align="center"><b>Improving Symbolic Music Generation with Inference-Time Alignment</b></p>
 
 <p align="center">
-  👉 <a href="https://ismirt2minferalign.github.io/text2midi-inferAlign/">Examples</a> 👈
+  👉 <a href="https://amaai-lab.github.io/t2m-inferalign/">Examples</a> 👈
 </p>
 
 ---
