@@ -1,45 +1,103 @@
 <h1 align="center">🎼 Text2midi-InferAlign</h1>
 <p align="center"><b>Improving Symbolic Music Generation with Inference-Time Alignment</b></p>
 
-<p align="center">
-  👉 <a href="https://amaai-lab.github.io/t2m-inferalign/">Examples</a> 👈
-</p>
+<div align="center">
+
+  [![Examples](https://img.shields.io/badge/Examples-Demo-blue?style=flat-square&logo=music)](https://amaai-lab.github.io/t2m-inferalign/)
+  [![arXiv](https://img.shields.io/badge/arXiv-2406.02255-brightgreen.svg)](https://arxiv.org/abs/2406.02255)
+</div>
 
 ---
 
-**Text2midi-InferAlign** is a novel inference-time technique designed to enhance symbolic music generation by improving alignment between generated compositions and textual prompts. Built to extend existing autoregressive models without additional training or fine-tuning, our method adds two lightweight yet powerful objectives during generation:
+**Text2midi-InferAlign** is an inference-time technique that enhances **symbolic music generation** by improving alignment between generated compositions and textual prompts. It is designed to extend autoregressive models—like **Text2Midi**—without requiring any additional training or fine-tuning.
 
-- **🎵 Text-Audio Consistency:** Encourages the temporal structure of the music to match the rhythm and cadence implied by the input caption.
-- **🎵 Harmonic Consistency:** Penalizes musically inconsistent notes (e.g. out-of-key or dissonant phrases) to maintain tonal coherence.
+Our method introduces two lightweight but effective alignment-based objectives into the generation process:
 
-By integrating these alignment-based rewards directly into the generation loop, Text2midi-InferAlign produces music that is not only more faithful to the prompt, but also more musically coherent.
+- **🎵 Text-Audio Consistency:** Encourages the temporal structure of the music to reflect the rhythm and pacing implied by the input caption.
+- **🎵 Harmonic Consistency:** Penalizes musically inconsistent notes (e.g., out-of-key or dissonant phrases), promoting tonal coherence.
 
-We implement and evaluate our method on **Text2midi**, a state-of-the-art text-to-midi generation model, and demonstrate clear improvements in both **objective metrics** and **human evaluations**.
+By incorporating these alignment signals into the decoding loop, **Text2midi-InferAlign** produces music that is not only more faithful to textual descriptions but also harmonically robust.
+
+We evaluate our technique on **Text2Midi**, a state-of-the-art text-to-MIDI generation model, and report improvements in both **objective metrics** and **human evaluations**.
 
 ---
 
-## 📊 Results
+## 📦 Installation & Usage
+
+This repository contains the implementation of the Inference-Time Alignment module. Follow the steps below to get started.
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/AMAAI-Lab/t2m-inferalign.git
+cd t2m-inferalign
+```
+
+### 2. Set Up the Environment
+
+We recommend using **Python 3.10** and `conda` for environment management.
+
+```bash
+conda create -n alignment python=3.10
+conda activate alignment
+pip install -r requirements.txt
+```
+
+### 3. Download Model Weights and Resources
+
+- Download the pretrained **Text2Midi** model from HuggingFace:  
+  🔗 https://huggingface.co/amaai-lab/text2midi
+
+- Also download the corresponding tokenizer and soundfonts:  
+  🔗 https://huggingface.co/amaai-lab/text2midi/tree/main/
+
+You may choose to organize them like this:
+
+```
+t2m-inferalign/
+├── checkpoints/
+│   └── pytorch_model.bin
+├── tokenizer/
+│   └── vocab_remi.pkl
+├── soundfonts/
+│   └── soundfont.sf2
+```
+
+### 4. Run Inference with Alignment
+
+```bash
+python progressive_explorer.py --caption "A gentle piano lullaby with soft melodies" --model_path checkpoints/pytorch_model.bin --tokenizer_path tokenizer/vocab_remi.pkl --output_path outputs/lullaby.mid
+```
+
+Optional arguments:
+- `--max_tokens`: Max number of tokens in the generated sequence.
+- `--batch_size`: Number of tokens to generate before checking rewards.
+- `--beams`: Number of parallel sequences to generate.
+
+---
+
+## 📊 Experimental Results
 
 ### ✅ Objective Evaluation
 
-We evaluate performance on the MidiCaps dataset using six objective metrics. Our method outperforms the baseline on most alignment and structural consistency measures.
+We evaluate on the **MidiCaps** dataset using six standard metrics. Our approach outperforms the Text2Midi baseline in all key alignment and tonal consistency metrics.
 
-| Metric                  | Text2Midi | Text2midi-InferAlign |
-|------------------------|-----------|-----------------------|
-| **CR** (Compression Ratio) ↑         | 2.16      | **2.31**              |
-| **CLAP** (Text-Audio Consistency) ↑  | 0.17      | **0.22**              |
-| **TB** (Tempo Bin %) ↑               | 29.73     | 35.41                 |
-| **TBT** (Tempo Bin w/ Tolerance %) ↑ | 60.06     | 62.59                 |
-| **CK** (Correct Key %) ↑             | 13.59     | **29.80**             |
-| **CKD** (Correct Key w/ Duplicates %) ↑ | 16.66  | **32.54**             |
+| Metric                                | Text2Midi | Text2midi-InferAlign |
+|---------------------------------------|-----------|-----------------------|
+| **CR** (Compression Ratio) ↑          | 2.16      | **2.31**              |
+| **CLAP** (Text-Audio Consistency) ↑   | 0.17      | **0.22**              |
+| **TB** (Tempo Bin %) ↑                | 29.73     | 35.41                 |
+| **TBT** (Tempo Bin w/ Tolerance %) ↑  | 60.06     | 62.59                 |
+| **CK** (Correct Key %) ↑              | 13.59     | **29.80**             |
+| **CKD** (Correct Key w/ Duplicates %) ↑ | 16.66   | **32.54**             |
 
-**Note:** All results are averaged over about **50%** randomly selected captions from the MidiCaps test set (7913 examples).
+> All results are averaged over ~50% of the MidiCaps test set (7913 captions randomly sampled).
 
 ---
 
 ### 🎧 Subjective Evaluation
 
-We conducted a user study with 24 participants. Participants were asked to compare music generated by **Text2Midi** and **Text2midi-InferAlign**, evaluating based on musical quality and text-audio alignment.
+A user study was conducted with **24 participants**, comparing outputs from **Text2Midi** and **Text2midi-InferAlign**. Participants rated musical quality and text-audio alignment.
 
 #### Music Quality & Text-Audio Match
 
@@ -55,6 +113,27 @@ We conducted a user study with 24 participants. Participants were asked to compa
 | MidiCaps Caption     | 48.33         | **51.67**                 |
 | Free Text Caption    | 27.78         | **72.22**                 |
 
-These results demonstrate that **Text2midi-InferAlign** not only improves alignment and tonal structure, but also generalizes better to open-ended prompts.
+These results demonstrate that **Text2midi-InferAlign** significantly enhances both musical structure and semantic relevance, especially for **free-form, open-ended prompts**.
 
 ---
+
+## 📌 Citation
+
+If you find this work useful in your research, please cite:
+
+```bibtex
+@misc{text2midi-inferalign,
+  title={Text2midi-InferAlign: Improving Symbolic Music Generation with Inference-Time Alignment},
+  author={Abhinaba Roy, Geeta Puri, Dorien Herremans},
+  year={2025},
+  url={https://github.com/AMAAI-Lab/t2m-inferalign}
+}
+```
+
+---
+
+## 🔗 Resources
+
+- 🎧 [Examples](https://amaai-lab.github.io/t2m-inferalign/)
+- 🎼 [Text2Midi (Base Model)](https://github.com/AMAAI-Lab/text2midi)
+- 🤗 [Text2Midi on HuggingFace](https://huggingface.co/amaai-lab/text2midi)
