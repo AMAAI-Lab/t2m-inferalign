@@ -1,0 +1,62 @@
+model:
+  text2midi_model:
+    decoder_max_sequence_length: 2048
+    decoder_num_layers: 18
+    decoder_num_heads: 8
+    decoder_d_model: 768
+    decoder_intermediate_size: 1024
+    use_moe: False
+    num_experts: 4
+    use_deepspeed: False
+    use_accelerate: True
+  
+
+training:
+  text2midi_model:
+    epochs: 140
+    batch_size: 1
+    learning_rate: 0.000001
+    weight_decay: 0.01
+    gradient_accumulation_steps: 4
+    with_tracking: True
+    checkpointing_steps: epoch
+    report_to: wandb
+    output_dir: /root/output_test_new
+    per_device_train_batch_size: 32
+    use_scheduler: True
+    lr_scheduler_type: cosine #choices=["linear", "cosine", "cosine_with_restarts", "polynomial", "constant", "constant_with_warmup"]
+    num_warmup_steps: 100
+    save_every: 5
+    max_train_steps: None
+    scheduled_sampling: False
+    epsilon: 0
+    c: -0.0161
+    k: -0.312
+
+raw_data:
+  caption_dataset_path: /root/captions/train.json
+  raw_data_folders: 
+    lmd: 
+      folder_path: /import/c4dm-datasets-ext/lakhmidi
+      file_extension: midi
+    symphonynet:
+      folder_path: /root/text2midi/data/symphonynet/data/SymphonyNet_Dataset
+      file_extension: mid
+    maestro:
+      folder_path: /import/c4dm-datasets/maestro-v3.0.0
+      file_extension: midi
+    pop909:
+      folder_path: /import/c4dm-datasets-ext/POP909
+      file_extension: mid
+    pijama:
+      folder_path: /import/c4dm-datasets/PiJAMA/data/midi
+      file_extension: midi
+    midicaps:
+      folder_path: /root/data
+      file_extension: mid
+    
+
+deepspeed_config:
+  deepspeed_config_path: /root/test/text2midi/configs/ds_config.json
+
+artifact_folder: ../artifacts
