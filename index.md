@@ -71,6 +71,6 @@ Under review!
 ---
 
 ## 📥 Repository
-[GitHub Repo](https://github.com/ismirt2minferalign/text2midi-inferAlign)
+[GitHub Repo](https://github.com/AMAAI-Lab/t2m-inferalign/)
 
 ---
