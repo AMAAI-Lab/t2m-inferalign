@@ -42,6 +42,12 @@ conda create -n alignment python=3.10
 conda activate alignment
 pip install -r requirements.txt
 ```
+Please export your API key. 
+```bash
+export ANTHROPIC_API_KEY=<your key>
+```
+or you can set your key [here](https://github.com/AMAAI-Lab/t2m-inferalign/blob/04487795c7a7625ba4d9d17e417774b6a047d19e/progressive_explorer.py#L88C54-L88C71).
+
 
 ### 3. Download Model Weights and Resources
 
@@ -62,6 +68,7 @@ t2m-inferalign/
 ├── soundfonts/
 │   └── soundfont.sf2
 ```
+Please fix the soundfont path [here](https://github.com/AMAAI-Lab/t2m-inferalign/blob/04487795c7a7625ba4d9d17e417774b6a047d19e/progressive_explorer.py#L31) or [here](https://github.com/AMAAI-Lab/t2m-inferalign/blob/04487795c7a7625ba4d9d17e417774b6a047d19e/progressive_explorer.py#L473).
 
 ### 4. Run Inference with Alignment
 
