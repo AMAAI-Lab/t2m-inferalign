@@ -4,7 +4,7 @@
 <div align="center">
 
   [![Examples](https://img.shields.io/badge/Examples-Demo-blue?style=flat-square&logo=music)](https://amaai-lab.github.io/t2m-inferalign)
-  [![arXiv](https://img.shields.io/badge/arXiv-2406.02255-brightgreen.svg)](https://arxiv.org/abs/2406.02255)
+  [![arXiv](https://img.shields.io/badge/arXiv-2505.12669-brightgreen.svg)](https://arxiv.org/abs/2505.12669)
 </div>
 
 ---
