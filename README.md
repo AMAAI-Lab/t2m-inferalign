@@ -129,11 +129,11 @@ These results demonstrate that **Text2midi-InferAlign** significantly enhances b
 If you find this work useful in your research, please cite:
 
 ```bibtex
-@misc{text2midi-inferalign,
+@article{text2midi-inferalign,
   title={Text2midi-InferAlign: Improving Symbolic Music Generation with Inference-Time Alignment},
   author={Abhinaba Roy, Geeta Puri, Dorien Herremans},
   year={2025},
-  url={https://github.com/AMAAI-Lab/t2m-inferalign}
+  journal={arXiv:2505.12669}
 }
 ```
 
