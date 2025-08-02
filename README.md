@@ -98,7 +98,7 @@ We evaluate on the **MidiCaps** dataset using six standard metrics. Our approach
 | **CK** (Correct Key %) ↑              | 13.59     | **29.80**             |
 | **CKD** (Correct Key w/ Duplicates %) ↑ | 16.66   | **32.54**             |
 
-> All results are averaged over ~50% of the MidiCaps test set (7913 captions randomly sampled).
+> All results are averaged over the MidiCaps test set.
 
 ---
 
